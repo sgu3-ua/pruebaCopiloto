@@ -12,6 +12,11 @@ const BASE_AI_SPEED = 5;
 const BASE_BALL_SPEED = 6;
 const SPEED_INCREMENT = 0.3; // Incremento de velocidad tras cada gol en modo IA
 
+// Límites máximos de dificultad en modo IA
+const MAX_BALL_SPEED = 12; // Máximo 2x la velocidad base
+const MAX_PADDLE_SPEED = 11; // Máximo ~1.5x la velocidad base
+const MAX_AI_SPEED = 9; // Máximo ~1.8x la velocidad base
+
 // Estado de juego
 let gameMode = null; // '1player', '2player', 'online-host', 'online-guest'
 let gameStarted = false;
@@ -412,9 +417,10 @@ function resetBall() {
 // Incrementa la dificultad en modo IA
 function increaseDifficulty() {
   if (gameMode === '1player') {
-    currentBallSpeed += SPEED_INCREMENT;
-    currentPaddleSpeed += SPEED_INCREMENT * 0.5;
-    currentAISpeed += SPEED_INCREMENT * 0.4;
+    // Aumentar velocidades pero respetando los límites máximos
+    currentBallSpeed = Math.min(currentBallSpeed + SPEED_INCREMENT, MAX_BALL_SPEED);
+    currentPaddleSpeed = Math.min(currentPaddleSpeed + SPEED_INCREMENT * 0.5, MAX_PADDLE_SPEED);
+    currentAISpeed = Math.min(currentAISpeed + SPEED_INCREMENT * 0.4, MAX_AI_SPEED);
   }
 }
 
