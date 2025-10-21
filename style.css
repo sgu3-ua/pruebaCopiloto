@@ -11,9 +11,55 @@ body {
   justify-content: center;
 }
 
+#menu {
+  text-align: center;
+}
+
+#menu h1 {
+  font-size: 4rem;
+  margin-bottom: 2rem;
+  color: #0ff;
+  text-shadow: 0 0 10px #0ff;
+}
+
+#menu button {
+  display: block;
+  margin: 1rem auto;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  background: #0ff;
+  color: #111;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+
+#menu button:hover {
+  background: #fff;
+  transform: scale(1.1);
+}
+
+#gameContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#scoreboard {
+  font-size: 3rem;
+  color: #fff;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+#separator {
+  margin: 0 2rem;
+  color: #666;
+}
+
 canvas#pong {
   background: #111;
   border: 2px solid #fff;
   display: block;
-  margin: 30px auto;
 }

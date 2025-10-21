@@ -2,11 +2,23 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Pong 2 Jugadores</title>
+  <title>Pong Game</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <canvas id="pong" width="800" height="500"></canvas>
+  <div id="menu">
+    <h1>PONG</h1>
+    <button id="btn1Player">1 Jugador (vs IA)</button>
+    <button id="btn2Players">2 Jugadores</button>
+  </div>
+  <div id="gameContainer" style="display: none;">
+    <div id="scoreboard">
+      <span id="leftScore">0</span>
+      <span id="separator">-</span>
+      <span id="rightScore">0</span>
+    </div>
+    <canvas id="pong" width="800" height="500"></canvas>
+  </div>
   <script src="game.js"></script>
 </body>
 </html>
