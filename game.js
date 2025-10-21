@@ -259,9 +259,11 @@ function handleRemoteData(data) {
       leftY = data.y;
     }
   } else if (data.type === 'ball' && !isHost) {
-    // Solo el invitado sincroniza la pelota del host
-    ball.x = data.x;
-    ball.y = data.y;
+    // El invitado reconcilia su pelota local con la del host (autoridad)
+    // Interpolación suave para evitar saltos bruscos
+    const lerpFactor = 0.3; // Factor de interpolación (0 = local, 1 = host)
+    ball.x = ball.x + (data.x - ball.x) * lerpFactor;
+    ball.y = ball.y + (data.y - ball.y) * lerpFactor;
     ball.vx = data.vx;
     ball.vy = data.vy;
   } else if (data.type === 'score') {
@@ -473,8 +475,39 @@ function update() {
     }
   }
 
-  // Física de la pelota (solo el host actualiza en modo online)
-  if (gameMode !== 'online-guest') {
+  // Física de la pelota
+  if (gameMode === 'online-guest') {
+    // El invitado también simula la física localmente para mejor respuesta
+    // pero el host sigue siendo la autoridad y corregirá desviaciones
+    ball.x += ball.vx;
+    ball.y += ball.vy;
+
+    // Rebote arriba/abajo
+    if (ball.y <= 0 || ball.y + BALL_SIZE >= canvas.height) {
+      ball.vy *= -1;
+    }
+
+    // Colisión pala izquierda (del host)
+    if (
+      ball.x <= PLAYER_X + PADDLE_WIDTH &&
+      ball.y + BALL_SIZE >= leftY &&
+      ball.y <= leftY + PADDLE_HEIGHT
+    ) {
+      ball.vx *= -1;
+      ball.x = PLAYER_X + PADDLE_WIDTH;
+    }
+
+    // Colisión pala derecha (del invitado)
+    if (
+      ball.x + BALL_SIZE >= RIGHT_X &&
+      ball.y + BALL_SIZE >= rightY &&
+      ball.y <= rightY + PADDLE_HEIGHT
+    ) {
+      ball.vx *= -1;
+      ball.x = RIGHT_X - BALL_SIZE;
+    }
+  } else if (gameMode !== 'online-guest') {
+    // Host y modos locales calculan la física normalmente
     // Mueve pelota
     ball.x += ball.vx;
     ball.y += ball.vy;
@@ -504,7 +537,7 @@ function update() {
       ball.x = RIGHT_X - BALL_SIZE;
     }
 
-    // Pelota fuera - actualiza marcador
+    // Pelota fuera - actualiza marcador (solo host en modo online)
     if (ball.x < 0) {
       // Salió por la izquierda, punto para el jugador derecho
       rightScore++;
