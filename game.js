@@ -36,6 +36,10 @@ let connection = null;
 let isHost = false;
 let sessionId = null;
 
+// Variables para velocidad inicial de la pelota
+let ballJustReset = false; // Indica si la pelota acaba de reiniciarse
+let hasBouncedAfterReset = false; // Indica si ha rebotado después del reset
+
 // Teclas presionadas
 let keys = {};
 
@@ -58,6 +62,7 @@ const joinSetup = document.getElementById('joinSetup');
 const sessionCodeDisplay = document.getElementById('sessionCode');
 const sessionCodeInput = document.getElementById('sessionCodeInput');
 const connectionStatus = document.getElementById('connectionStatus');
+const playerRoleElement = document.getElementById('playerRole');
 
 // Botones del menú
 document.getElementById('btn1Player').addEventListener('click', () => {
@@ -331,12 +336,32 @@ function startGame(mode) {
   onlineSetup.style.display = 'none';
   gameContainer.style.display = 'flex';
   
-  // Mostrar/ocultar controles derechos según el modo
+  // Mostrar/ocultar indicador de rol y controles según el modo
   const rightControls = document.getElementById('rightControls');
-  if (mode === '1player' || mode === 'online-host') {
+  const leftControls = document.getElementById('leftControls');
+  
+  if (mode === 'online-host') {
+    // Host controla la pala izquierda (cyan)
     rightControls.style.display = 'none';
-  } else {
+    leftControls.style.display = 'flex';
+    playerRoleElement.textContent = 'Eres el Jugador Izquierdo (Cyan)';
+    playerRoleElement.style.display = 'block';
+  } else if (mode === 'online-guest') {
+    // Guest controla la pala derecha (roja)
+    leftControls.style.display = 'none';
     rightControls.style.display = 'flex';
+    playerRoleElement.textContent = 'Eres el Jugador Derecho (Rojo)';
+    playerRoleElement.style.display = 'block';
+  } else if (mode === '1player') {
+    // Modo IA: solo controles izquierdos
+    rightControls.style.display = 'none';
+    leftControls.style.display = 'flex';
+    playerRoleElement.style.display = 'none';
+  } else {
+    // Modo 2 jugadores local: ambos controles
+    leftControls.style.display = 'flex';
+    rightControls.style.display = 'flex';
+    playerRoleElement.style.display = 'none';
   }
   
   resetBall();
@@ -373,8 +398,15 @@ function backToMenu() {
 function resetBall() {
   ball.x = canvas.width / 2 - BALL_SIZE / 2;
   ball.y = canvas.height / 2 - BALL_SIZE / 2;
-  ball.vx = currentBallSpeed * (Math.random() > 0.5 ? 1 : -1);
-  ball.vy = (currentBallSpeed / 2) * (Math.random() > 0.5 ? 1 : -1);
+  
+  // Velocidad reducida al inicio (50% de la velocidad actual)
+  const slowSpeed = currentBallSpeed * 0.5;
+  ball.vx = slowSpeed * (Math.random() > 0.5 ? 1 : -1);
+  ball.vy = (slowSpeed / 2) * (Math.random() > 0.5 ? 1 : -1);
+  
+  // Marcar que la pelota acaba de reiniciarse
+  ballJustReset = true;
+  hasBouncedAfterReset = false;
 }
 
 // Incrementa la dificultad en modo IA
@@ -485,6 +517,15 @@ function update() {
     // Rebote arriba/abajo
     if (ball.y <= 0 || ball.y + BALL_SIZE >= canvas.height) {
       ball.vy *= -1;
+      
+      // Restaurar velocidad después del primer rebote
+      if (ballJustReset && !hasBouncedAfterReset) {
+        hasBouncedAfterReset = true;
+        const speedMultiplier = 2; // Restaurar a velocidad normal (estaba al 50%)
+        ball.vx *= speedMultiplier;
+        ball.vy *= speedMultiplier;
+        ballJustReset = false;
+      }
     }
 
     // Colisión pala izquierda (del host)
@@ -495,6 +536,15 @@ function update() {
     ) {
       ball.vx *= -1;
       ball.x = PLAYER_X + PADDLE_WIDTH;
+      
+      // Restaurar velocidad después del primer rebote
+      if (ballJustReset && !hasBouncedAfterReset) {
+        hasBouncedAfterReset = true;
+        const speedMultiplier = 2;
+        ball.vx *= speedMultiplier;
+        ball.vy *= speedMultiplier;
+        ballJustReset = false;
+      }
     }
 
     // Colisión pala derecha (del invitado)
@@ -505,6 +555,15 @@ function update() {
     ) {
       ball.vx *= -1;
       ball.x = RIGHT_X - BALL_SIZE;
+      
+      // Restaurar velocidad después del primer rebote
+      if (ballJustReset && !hasBouncedAfterReset) {
+        hasBouncedAfterReset = true;
+        const speedMultiplier = 2;
+        ball.vx *= speedMultiplier;
+        ball.vy *= speedMultiplier;
+        ballJustReset = false;
+      }
     }
   } else if (gameMode !== 'online-guest') {
     // Host y modos locales calculan la física normalmente
@@ -515,6 +574,15 @@ function update() {
     // Rebote arriba/abajo
     if (ball.y <= 0 || ball.y + BALL_SIZE >= canvas.height) {
       ball.vy *= -1;
+      
+      // Restaurar velocidad después del primer rebote
+      if (ballJustReset && !hasBouncedAfterReset) {
+        hasBouncedAfterReset = true;
+        const speedMultiplier = 2; // Restaurar a velocidad normal (estaba al 50%)
+        ball.vx *= speedMultiplier;
+        ball.vy *= speedMultiplier;
+        ballJustReset = false;
+      }
     }
 
     // Colisión pala izquierda
@@ -525,6 +593,15 @@ function update() {
     ) {
       ball.vx *= -1;
       ball.x = PLAYER_X + PADDLE_WIDTH;
+      
+      // Restaurar velocidad después del primer rebote
+      if (ballJustReset && !hasBouncedAfterReset) {
+        hasBouncedAfterReset = true;
+        const speedMultiplier = 2;
+        ball.vx *= speedMultiplier;
+        ball.vy *= speedMultiplier;
+        ballJustReset = false;
+      }
     }
 
     // Colisión pala derecha
@@ -535,6 +612,15 @@ function update() {
     ) {
       ball.vx *= -1;
       ball.x = RIGHT_X - BALL_SIZE;
+      
+      // Restaurar velocidad después del primer rebote
+      if (ballJustReset && !hasBouncedAfterReset) {
+        hasBouncedAfterReset = true;
+        const speedMultiplier = 2;
+        ball.vx *= speedMultiplier;
+        ball.vy *= speedMultiplier;
+        ballJustReset = false;
+      }
     }
 
     // Pelota fuera - actualiza marcador (solo host en modo online)
@@ -542,7 +628,7 @@ function update() {
       // Salió por la izquierda, punto para el jugador derecho
       rightScore++;
       updateScore();
-      increaseDifficulty(); // Incrementar dificultad en modo IA
+      increaseDifficulty(); // Incrementar dificultad (solo en modo IA)
       resetBall();
       if (gameMode === 'online-host') {
         sendScore();
@@ -551,7 +637,7 @@ function update() {
       // Salió por la derecha, punto para el jugador izquierdo
       leftScore++;
       updateScore();
-      increaseDifficulty(); // Incrementar dificultad en modo IA
+      increaseDifficulty(); // Incrementar dificultad (solo en modo IA)
       resetBall();
       if (gameMode === 'online-host') {
         sendScore();

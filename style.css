@@ -58,6 +58,14 @@ body {
   font-weight: bold;
 }
 
+#playerRole {
+  font-size: 1.2rem;
+  color: #0ff;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
 #separator {
   margin: 0 2rem;
   color: #666;
