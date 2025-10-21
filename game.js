@@ -42,6 +42,10 @@ document.getElementById('btn2Players').addEventListener('click', () => {
   startGame('2player');
 });
 
+document.getElementById('btnBackToMenu').addEventListener('click', () => {
+  backToMenu();
+});
+
 // Eventos de teclado
 document.addEventListener('keydown', e => {
   keys[e.key.toLowerCase()] = true;
@@ -54,10 +58,25 @@ document.addEventListener('keyup', e => {
 function startGame(mode) {
   gameMode = mode;
   gameStarted = true;
+  leftScore = 0;
+  rightScore = 0;
+  updateScore();
   menu.style.display = 'none';
   gameContainer.style.display = 'flex';
   resetBall();
   loop();
+}
+
+// Vuelve al menú principal
+function backToMenu() {
+  gameStarted = false;
+  gameMode = null;
+  leftScore = 0;
+  rightScore = 0;
+  leftY = canvas.height / 2 - PADDLE_HEIGHT / 2;
+  rightY = canvas.height / 2 - PADDLE_HEIGHT / 2;
+  gameContainer.style.display = 'none';
+  menu.style.display = 'block';
 }
 
 // Resetea la pelota

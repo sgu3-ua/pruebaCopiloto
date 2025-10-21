@@ -63,3 +63,20 @@ canvas#pong {
   border: 2px solid #fff;
   display: block;
 }
+
+#btnBackToMenu {
+  margin-top: 1rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.2rem;
+  background: #f00;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+
+#btnBackToMenu:hover {
+  background: #ff3333;
+  transform: scale(1.05);
+}
