@@ -27,6 +27,14 @@ let ball = {
 // Teclas presionadas
 let keys = {};
 
+// Estado de controles táctiles
+let touchControls = {
+  leftUp: false,
+  leftDown: false,
+  rightUp: false,
+  rightDown: false
+};
+
 // Referencias a elementos DOM
 const menu = document.getElementById('menu');
 const gameContainer = document.getElementById('gameContainer');
@@ -54,6 +62,62 @@ document.addEventListener('keyup', e => {
   keys[e.key.toLowerCase()] = false;
 });
 
+// Eventos táctiles para controles móviles
+function setupTouchControls() {
+  const leftUpBtn = document.getElementById('leftUp');
+  const leftDownBtn = document.getElementById('leftDown');
+  const rightUpBtn = document.getElementById('rightUp');
+  const rightDownBtn = document.getElementById('rightDown');
+
+  // Controles izquierdos
+  leftUpBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    touchControls.leftUp = true;
+  });
+  leftUpBtn.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    touchControls.leftUp = false;
+  });
+  leftDownBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    touchControls.leftDown = true;
+  });
+  leftDownBtn.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    touchControls.leftDown = false;
+  });
+
+  // Controles derechos
+  rightUpBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    touchControls.rightUp = true;
+  });
+  rightUpBtn.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    touchControls.rightUp = false;
+  });
+  rightDownBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    touchControls.rightDown = true;
+  });
+  rightDownBtn.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    touchControls.rightDown = false;
+  });
+
+  // También soportar clics de mouse para testing
+  leftUpBtn.addEventListener('mousedown', () => touchControls.leftUp = true);
+  leftUpBtn.addEventListener('mouseup', () => touchControls.leftUp = false);
+  leftDownBtn.addEventListener('mousedown', () => touchControls.leftDown = true);
+  leftDownBtn.addEventListener('mouseup', () => touchControls.leftDown = false);
+  rightUpBtn.addEventListener('mousedown', () => touchControls.rightUp = true);
+  rightUpBtn.addEventListener('mouseup', () => touchControls.rightUp = false);
+  rightDownBtn.addEventListener('mousedown', () => touchControls.rightDown = true);
+  rightDownBtn.addEventListener('mouseup', () => touchControls.rightDown = false);
+}
+
+setupTouchControls();
+
 // Inicia el juego
 function startGame(mode) {
   gameMode = mode;
@@ -63,6 +127,15 @@ function startGame(mode) {
   updateScore();
   menu.style.display = 'none';
   gameContainer.style.display = 'flex';
+  
+  // Mostrar/ocultar controles derechos según el modo
+  const rightControls = document.getElementById('rightControls');
+  if (mode === '1player') {
+    rightControls.style.display = 'none';
+  } else {
+    rightControls.style.display = 'flex';
+  }
+  
   resetBall();
   loop();
 }
@@ -132,16 +205,16 @@ function draw() {
 
 // Actualiza el juego
 function update() {
-  // Movimiento pala izquierda (W/S)
-  if (keys['w']) leftY -= PADDLE_SPEED;
-  if (keys['s']) leftY += PADDLE_SPEED;
+  // Movimiento pala izquierda (W/S o controles táctiles)
+  if (keys['w'] || touchControls.leftUp) leftY -= PADDLE_SPEED;
+  if (keys['s'] || touchControls.leftDown) leftY += PADDLE_SPEED;
   leftY = Math.max(0, Math.min(canvas.height - PADDLE_HEIGHT, leftY));
 
   // Movimiento pala derecha
   if (gameMode === '2player') {
-    // En modo 2 jugadores, flechas controlan la pala derecha
-    if (keys['arrowup']) rightY -= PADDLE_SPEED;
-    if (keys['arrowdown']) rightY += PADDLE_SPEED;
+    // En modo 2 jugadores, flechas o controles táctiles controlan la pala derecha
+    if (keys['arrowup'] || touchControls.rightUp) rightY -= PADDLE_SPEED;
+    if (keys['arrowdown'] || touchControls.rightDown) rightY += PADDLE_SPEED;
     rightY = Math.max(0, Math.min(canvas.height - PADDLE_HEIGHT, rightY));
   } else if (gameMode === '1player') {
     // En modo 1 jugador, la IA controla la pala derecha
