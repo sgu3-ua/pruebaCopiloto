@@ -8,10 +8,15 @@ const BALL_SIZE = 15;
 const PLAYER_X = 20;
 const RIGHT_X = canvas.width - PADDLE_WIDTH - 20;
 const PADDLE_SPEED = 7;
+const AI_SPEED = 5; // IA es un poco más lenta
 
 // Estado de juego
+let gameMode = null; // '1player' o '2player'
+let gameStarted = false;
 let leftY = canvas.height / 2 - PADDLE_HEIGHT / 2;
 let rightY = canvas.height / 2 - PADDLE_HEIGHT / 2;
+let leftScore = 0;
+let rightScore = 0;
 let ball = {
   x: canvas.width / 2 - BALL_SIZE / 2,
   y: canvas.height / 2 - BALL_SIZE / 2,
@@ -22,6 +27,33 @@ let ball = {
 // Teclas presionadas
 let keys = {};
 
+// Estado de controles táctiles
+let touchControls = {
+  leftUp: false,
+  leftDown: false,
+  rightUp: false,
+  rightDown: false
+};
+
+// Referencias a elementos DOM
+const menu = document.getElementById('menu');
+const gameContainer = document.getElementById('gameContainer');
+const leftScoreElement = document.getElementById('leftScore');
+const rightScoreElement = document.getElementById('rightScore');
+
+// Botones del menú
+document.getElementById('btn1Player').addEventListener('click', () => {
+  startGame('1player');
+});
+
+document.getElementById('btn2Players').addEventListener('click', () => {
+  startGame('2player');
+});
+
+document.getElementById('btnBackToMenu').addEventListener('click', () => {
+  backToMenu();
+});
+
 // Eventos de teclado
 document.addEventListener('keydown', e => {
   keys[e.key.toLowerCase()] = true;
@@ -29,6 +61,127 @@ document.addEventListener('keydown', e => {
 document.addEventListener('keyup', e => {
   keys[e.key.toLowerCase()] = false;
 });
+
+// Eventos táctiles para controles móviles
+function setupTouchControls() {
+  const leftUpBtn = document.getElementById('leftUp');
+  const leftDownBtn = document.getElementById('leftDown');
+  const rightUpBtn = document.getElementById('rightUp');
+  const rightDownBtn = document.getElementById('rightDown');
+
+  // Controles izquierdos
+  leftUpBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    touchControls.leftUp = true;
+  });
+  leftUpBtn.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    touchControls.leftUp = false;
+  });
+  leftDownBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    touchControls.leftDown = true;
+  });
+  leftDownBtn.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    touchControls.leftDown = false;
+  });
+
+  // Controles derechos
+  rightUpBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    touchControls.rightUp = true;
+  });
+  rightUpBtn.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    touchControls.rightUp = false;
+  });
+  rightDownBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    touchControls.rightDown = true;
+  });
+  rightDownBtn.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    touchControls.rightDown = false;
+  });
+
+  // También soportar clics de mouse para testing
+  leftUpBtn.addEventListener('mousedown', () => touchControls.leftUp = true);
+  leftUpBtn.addEventListener('mouseup', () => touchControls.leftUp = false);
+  leftDownBtn.addEventListener('mousedown', () => touchControls.leftDown = true);
+  leftDownBtn.addEventListener('mouseup', () => touchControls.leftDown = false);
+  rightUpBtn.addEventListener('mousedown', () => touchControls.rightUp = true);
+  rightUpBtn.addEventListener('mouseup', () => touchControls.rightUp = false);
+  rightDownBtn.addEventListener('mousedown', () => touchControls.rightDown = true);
+  rightDownBtn.addEventListener('mouseup', () => touchControls.rightDown = false);
+}
+
+setupTouchControls();
+
+// Inicia el juego
+function startGame(mode) {
+  gameMode = mode;
+  gameStarted = true;
+  leftScore = 0;
+  rightScore = 0;
+  updateScore();
+  menu.style.display = 'none';
+  gameContainer.style.display = 'flex';
+  
+  // Mostrar/ocultar controles derechos según el modo
+  const rightControls = document.getElementById('rightControls');
+  if (mode === '1player') {
+    rightControls.style.display = 'none';
+  } else {
+    rightControls.style.display = 'flex';
+  }
+  
+  resetBall();
+  loop();
+}
+
+// Vuelve al menú principal
+function backToMenu() {
+  gameStarted = false;
+  gameMode = null;
+  leftScore = 0;
+  rightScore = 0;
+  leftY = canvas.height / 2 - PADDLE_HEIGHT / 2;
+  rightY = canvas.height / 2 - PADDLE_HEIGHT / 2;
+  gameContainer.style.display = 'none';
+  menu.style.display = 'block';
+}
+
+// Resetea la pelota
+function resetBall() {
+  ball.x = canvas.width / 2 - BALL_SIZE / 2;
+  ball.y = canvas.height / 2 - BALL_SIZE / 2;
+  ball.vx = 6 * (Math.random() > 0.5 ? 1 : -1);
+  ball.vy = 3 * (Math.random() > 0.5 ? 1 : -1);
+}
+
+// IA para la pala derecha
+function updateAI() {
+  const ballCenterY = ball.y + BALL_SIZE / 2;
+  const paddleCenterY = rightY + PADDLE_HEIGHT / 2;
+  
+  // Solo sigue la pelota si viene hacia la IA
+  if (ball.vx > 0) {
+    if (ballCenterY < paddleCenterY - 10) {
+      rightY -= AI_SPEED;
+    } else if (ballCenterY > paddleCenterY + 10) {
+      rightY += AI_SPEED;
+    }
+  }
+  
+  rightY = Math.max(0, Math.min(canvas.height - PADDLE_HEIGHT, rightY));
+}
+
+// Actualiza marcador
+function updateScore() {
+  leftScoreElement.textContent = leftScore;
+  rightScoreElement.textContent = rightScore;
+}
 
 // Dibuja todo
 function draw() {
@@ -52,15 +205,21 @@ function draw() {
 
 // Actualiza el juego
 function update() {
-  // Movimiento palas izquierda (W/S)
-  if (keys['w']) leftY -= PADDLE_SPEED;
-  if (keys['s']) leftY += PADDLE_SPEED;
+  // Movimiento pala izquierda (W/S o controles táctiles)
+  if (keys['w'] || touchControls.leftUp) leftY -= PADDLE_SPEED;
+  if (keys['s'] || touchControls.leftDown) leftY += PADDLE_SPEED;
   leftY = Math.max(0, Math.min(canvas.height - PADDLE_HEIGHT, leftY));
 
-  // Movimiento palas derecha (Flechas)
-  if (keys['arrowup']) rightY -= PADDLE_SPEED;
-  if (keys['arrowdown']) rightY += PADDLE_SPEED;
-  rightY = Math.max(0, Math.min(canvas.height - PADDLE_HEIGHT, rightY));
+  // Movimiento pala derecha
+  if (gameMode === '2player') {
+    // En modo 2 jugadores, flechas o controles táctiles controlan la pala derecha
+    if (keys['arrowup'] || touchControls.rightUp) rightY -= PADDLE_SPEED;
+    if (keys['arrowdown'] || touchControls.rightDown) rightY += PADDLE_SPEED;
+    rightY = Math.max(0, Math.min(canvas.height - PADDLE_HEIGHT, rightY));
+  } else if (gameMode === '1player') {
+    // En modo 1 jugador, la IA controla la pala derecha
+    updateAI();
+  }
 
   // Mueve pelota
   ball.x += ball.vx;
@@ -91,20 +250,25 @@ function update() {
     ball.x = RIGHT_X - BALL_SIZE;
   }
 
-  // Pelota fuera, reinicia
-  if (ball.x < 0 || ball.x > canvas.width) {
-    ball.x = canvas.width / 2 - BALL_SIZE / 2;
-    ball.y = canvas.height / 2 - BALL_SIZE / 2;
-    ball.vx = 6 * (Math.random() > 0.5 ? 1 : -1);
-    ball.vy = 3 * (Math.random() > 0.5 ? 1 : -1);
+  // Pelota fuera - actualiza marcador
+  if (ball.x < 0) {
+    // Salió por la izquierda, punto para el jugador derecho
+    rightScore++;
+    updateScore();
+    resetBall();
+  } else if (ball.x > canvas.width) {
+    // Salió por la derecha, punto para el jugador izquierdo
+    leftScore++;
+    updateScore();
+    resetBall();
   }
 }
 
 // Bucle principal
 function loop() {
+  if (!gameStarted) return;
   update();
   draw();
   requestAnimationFrame(loop);
 }
 
-loop();

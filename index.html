@@ -2,11 +2,35 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Pong 2 Jugadores</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Pong Game</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <canvas id="pong" width="800" height="500"></canvas>
+  <div id="menu">
+    <h1>PONG</h1>
+    <button id="btn1Player">1 Jugador (vs IA)</button>
+    <button id="btn2Players">2 Jugadores</button>
+  </div>
+  <div id="gameContainer" style="display: none;">
+    <div id="scoreboard">
+      <span id="leftScore">0</span>
+      <span id="separator">-</span>
+      <span id="rightScore">0</span>
+    </div>
+    <canvas id="pong" width="800" height="500"></canvas>
+    <div id="mobileControls">
+      <div id="leftControls" class="control-area">
+        <button class="control-btn" id="leftUp">▲</button>
+        <button class="control-btn" id="leftDown">▼</button>
+      </div>
+      <div id="rightControls" class="control-area">
+        <button class="control-btn" id="rightUp">▲</button>
+        <button class="control-btn" id="rightDown">▼</button>
+      </div>
+    </div>
+    <button id="btnBackToMenu">Volver al Menú</button>
+  </div>
   <script src="game.js"></script>
 </body>
 </html>
