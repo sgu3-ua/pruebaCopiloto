@@ -58,6 +58,14 @@ body {
   font-weight: bold;
 }
 
+#playerRole {
+  font-size: 1.2rem;
+  color: #0ff;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
 #separator {
   margin: 0 2rem;
   color: #666;
@@ -107,7 +115,7 @@ canvas#pong {
 }
 
 #btnBackToMenu {
-  margin-top: 1rem;
+  margin-bottom: 1rem;
   padding: 0.8rem 1.5rem;
   font-size: 1.2rem;
   background: #f00;
@@ -121,6 +129,114 @@ canvas#pong {
 #btnBackToMenu:hover {
   background: #ff3333;
   transform: scale(1.05);
+}
+
+/* Online multiplayer setup styles */
+#onlineSetup {
+  text-align: center;
+  padding: 2rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+#onlineSetup h2 {
+  color: #0ff;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+#onlineSetup p {
+  font-size: 1.2rem;
+  margin: 1rem 0;
+}
+
+.code-display {
+  background: #333;
+  border: 2px solid #0ff;
+  color: #0ff;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 1rem;
+  margin: 1rem auto;
+  border-radius: 10px;
+  letter-spacing: 0.2rem;
+  font-family: 'Courier New', monospace;
+  user-select: all;
+  -webkit-user-select: all;
+}
+
+.info-text {
+  color: #aaa;
+  font-size: 1rem;
+}
+
+#sessionCodeInput {
+  width: 80%;
+  max-width: 300px;
+  padding: 1rem;
+  font-size: 1.5rem;
+  text-align: center;
+  background: #333;
+  color: #fff;
+  border: 2px solid #0ff;
+  border-radius: 5px;
+  margin: 1rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  font-family: 'Courier New', monospace;
+}
+
+#sessionCodeInput:focus {
+  outline: none;
+  border-color: #fff;
+}
+
+#btnConnect, #btnCancelOnline {
+  margin: 1rem;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+
+#btnConnect {
+  background: #0f0;
+  color: #111;
+}
+
+#btnConnect:hover {
+  background: #0ff;
+  transform: scale(1.05);
+}
+
+#btnCancelOnline {
+  background: #666;
+  color: #fff;
+}
+
+#btnCancelOnline:hover {
+  background: #888;
+  transform: scale(1.05);
+}
+
+#connectionStatus {
+  color: #ff0;
+  font-size: 1rem;
+  margin-top: 1rem;
+  min-height: 1.5rem;
+}
+
+#waitingMessage {
+  color: #ff0;
+  font-size: 1.2rem;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
 /* Mobile responsive styles */
