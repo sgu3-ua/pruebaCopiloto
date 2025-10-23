@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Pong Game</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+</head>
+<body>
+  <div id="menu">
+    <h1>PONG</h1>
+    <button id="btn1Player">1 Jugador (vs IA)</button>
+    <button id="btn2Players">2 Jugadores (Local)</button>
+    <button id="btnOnlineHost">Multijugador en Línea (Crear Partida)</button>
+    <button id="btnOnlineJoin">Unirse a Partida</button>
+    <button id="btnMainMenu" onclick="location.href='../../index.html'">Volver al Menú Principal</button>
+  </div>
+  <div id="onlineSetup" style="display: none;">
+    <h2 id="setupTitle"></h2>
+    <div id="hostSetup" style="display: none;">
+      <p>Tu código de sesión:</p>
+      <div id="sessionCode" class="code-display"></div>
+      <p class="info-text">Comparte este código con tu oponente</p>
+      <p id="waitingMessage">Esperando al oponente...</p>
+    </div>
+    <div id="joinSetup" style="display: none;">
+      <p>Introduce el código de sesión:</p>
+      <input type="text" id="sessionCodeInput" placeholder="Código de sesión" maxlength="10">
+      <button id="btnConnect">Conectar</button>
+      <p id="connectionStatus"></p>
+    </div>
+    <button id="btnCancelOnline">Cancelar</button>
+  </div>
+  <div id="gameContainer" style="display: none;">
+    <button id="btnBackToMenu">Volver al Menú</button>
+    <div id="playerRole" style="display: none;"></div>
+    <div id="scoreboard">
+      <span id="leftScore">0</span>
+      <span id="separator">-</span>
+      <span id="rightScore">0</span>
+    </div>
+    <canvas id="pong" width="800" height="500"></canvas>
+    <div id="mobileControls">
+      <div id="leftControls" class="control-area">
+        <button class="control-btn" id="leftUp">▲</button>
+        <button class="control-btn" id="leftDown">▼</button>
+      </div>
+      <div id="rightControls" class="control-area">
+        <button class="control-btn" id="rightUp">▲</button>
+        <button class="control-btn" id="rightDown">▼</button>
+      </div>
+    </div>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>
