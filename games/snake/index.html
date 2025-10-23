@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Snake Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="menu">
+    <h1>SNAKE</h1>
+    <div class="settings">
+      <label>Velocidad del juego:
+        <select id="speed">
+          <option value="150">Lento</option>
+          <option value="100" selected>Normal</option>
+          <option value="70">Rápido</option>
+          <option value="50">Muy Rápido</option>
+        </select>
+      </label>
+      <label>Tamaño del tablero:
+        <select id="boardSize">
+          <option value="15">Pequeño (15x15)</option>
+          <option value="20" selected>Mediano (20x20)</option>
+          <option value="25">Grande (25x25)</option>
+        </select>
+      </label>
+      <label>
+        <input type="checkbox" id="walls" checked>
+        Muros (chocar con paredes termina el juego)
+      </label>
+    </div>
+    <button id="btnStart">Iniciar Juego</button>
+    <button id="btnMainMenu" onclick="location.href='../../index.html'">Volver al Menú Principal</button>
+  </div>
+  <div id="gameContainer" style="display: none;">
+    <button id="btnBackToMenu">Volver al Menú</button>
+    <div id="scoreboard">
+      <span>Puntuación: <span id="score">0</span></span>
+    </div>
+    <canvas id="snake" width="600" height="600"></canvas>
+    <div id="mobileControls">
+      <div class="control-row">
+        <button class="control-btn" id="upBtn">▲</button>
+      </div>
+      <div class="control-row">
+        <button class="control-btn" id="leftBtn">◄</button>
+        <button class="control-btn" id="downBtn">▼</button>
+        <button class="control-btn" id="rightBtn">►</button>
+      </div>
+    </div>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>
