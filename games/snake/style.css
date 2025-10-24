@@ -176,3 +176,66 @@ canvas#snake {
     font-size: 1.5rem;
   }
 }
+
+/* Landscape orientation support */
+@media (max-height: 600px) and (orientation: landscape) {
+  #menu {
+    padding: 1rem;
+    max-width: 100%;
+  }
+
+  #menu h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .settings {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .settings label {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+  }
+
+  #menu button {
+    font-size: 1rem;
+    padding: 0.6rem 1rem;
+    margin: 0.5rem auto;
+  }
+
+  #gameContainer {
+    padding: 0.5rem;
+  }
+
+  #scoreboard {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  canvas#snake {
+    max-height: 65vh;
+  }
+
+  #mobileControls {
+    gap: 0.3rem;
+    margin-top: 0.5rem;
+  }
+
+  .control-row {
+    gap: 0.3rem;
+  }
+
+  .control-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+
+  #btnBackToMenu {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+}

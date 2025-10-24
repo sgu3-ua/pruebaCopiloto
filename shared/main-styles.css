@@ -83,3 +83,37 @@ body {
     font-size: 1.5rem;
   }
 }
+
+/* Landscape orientation support */
+@media (max-height: 600px) and (orientation: landscape) {
+  body {
+    overflow-y: auto;
+  }
+
+  #mainMenu {
+    padding: 1rem;
+  }
+
+  #mainMenu h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .game-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .game-btn {
+    min-height: 80px;
+    padding: 1rem;
+  }
+
+  .game-title {
+    font-size: 1.2rem;
+  }
+
+  .game-desc {
+    font-size: 0.8rem;
+  }
+}
