@@ -1,0 +1,277 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #222;
+  color: #eee;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+#menu {
+  text-align: center;
+  padding: 2rem;
+  max-width: 600px;
+}
+
+#menu h1 {
+  font-size: 4rem;
+  margin-bottom: 2rem;
+  color: #0f0;
+  text-shadow: 0 0 10px #0f0;
+}
+
+.settings {
+  background: #333;
+  padding: 2rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+}
+
+.settings label {
+  display: block;
+  margin: 1rem 0;
+  font-size: 1.2rem;
+}
+
+.settings select {
+  margin-left: 1rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background: #444;
+  color: #fff;
+  border: 1px solid #666;
+  border-radius: 5px;
+}
+
+#menu button {
+  display: block;
+  margin: 1rem auto;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  background: #0f0;
+  color: #111;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+
+#menu button:hover {
+  background: #fff;
+  transform: scale(1.1);
+}
+
+#gameContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  width: 100%;
+  max-width: 100%;
+}
+
+#scoreboard {
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+canvas#snake {
+  background: #111;
+  border: 2px solid #0f0;
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#mobileControls {
+  display: none;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.control-row {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.control-btn {
+  width: 80px;
+  height: 80px;
+  font-size: 2rem;
+  background: #0f0;
+  color: #111;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.control-btn:active {
+  background: #fff;
+  transform: scale(0.95);
+}
+
+#btnBackToMenu {
+  margin-bottom: 1rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.2rem;
+  background: #f00;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+
+#btnBackToMenu:hover {
+  background: #ff3333;
+  transform: scale(1.05);
+}
+
+@media (max-width: 850px) {
+  #menu h1 {
+    font-size: 3rem;
+  }
+
+  #scoreboard {
+    font-size: 1.5rem;
+  }
+
+  canvas#snake {
+    width: 100%;
+    height: auto;
+  }
+
+  #mobileControls {
+    display: flex;
+  }
+}
+
+@media (max-width: 480px) {
+  #menu h1 {
+    font-size: 2.5rem;
+  }
+
+  .settings {
+    padding: 1rem;
+  }
+
+  .settings label {
+    font-size: 1rem;
+  }
+
+  .control-btn {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+  }
+}
+
+/* Landscape orientation support */
+@media (max-height: 600px) and (orientation: landscape) {
+  #menu {
+    padding: 1rem;
+    max-width: 100%;
+  }
+
+  #menu h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .settings {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .settings label {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+  }
+
+  #menu button {
+    font-size: 1rem;
+    padding: 0.6rem 1rem;
+    margin: 0.5rem auto;
+  }
+
+  #gameContainer {
+    padding: 0.5rem;
+  }
+
+  #scoreboard {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  canvas#snake {
+    max-height: 65vh;
+    width: auto !important;
+    height: auto !important;
+  }
+
+  #mobileControls {
+    gap: 0.3rem;
+    margin-top: 0.5rem;
+  }
+
+  .control-row {
+    gap: 0.3rem;
+  }
+
+  .control-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+
+  #btnBackToMenu {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+body {
+  padding-bottom: 50px;
+}
+
+.copilot-notice {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 140, 0, 0.85);
+  color: #111;
+  text-align: center;
+  padding: 0.6rem;
+  font-size: 0.85rem;
+  font-weight: bold;
+  border-top: 2px solid #ff8c00;
+  z-index: 1000;
+}
+
+.copilot-notice p {
+  margin: 0;
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+  body {
+    padding-bottom: 35px;
+  }
+  
+  .copilot-notice {
+    font-size: 0.7rem;
+    padding: 0.4rem;
+  }
+}

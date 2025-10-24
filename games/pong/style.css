@@ -1,0 +1,354 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #222;
+  color: #eee;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+#menu {
+  text-align: center;
+  padding: 1rem;
+}
+
+#menu h1 {
+  font-size: 4rem;
+  margin-bottom: 2rem;
+  color: #0ff;
+  text-shadow: 0 0 10px #0ff;
+}
+
+#menu button {
+  display: block;
+  margin: 1rem auto;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  background: #0ff;
+  color: #111;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+
+#menu button:hover {
+  background: #fff;
+  transform: scale(1.1);
+}
+
+#gameContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  width: 100%;
+  max-width: 100%;
+}
+
+#scoreboard {
+  font-size: 3rem;
+  color: #fff;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+#playerRole {
+  font-size: 1.2rem;
+  color: #0ff;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+#separator {
+  margin: 0 2rem;
+  color: #666;
+}
+
+canvas#pong {
+  background: #111;
+  border: 2px solid #fff;
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#mobileControls {
+  display: none;
+  width: 100%;
+  max-width: 800px;
+  justify-content: space-between;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.control-area {
+  display: flex;
+  gap: 0.5rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.control-btn {
+  width: 80px;
+  height: 80px;
+  font-size: 2rem;
+  background: #0ff;
+  color: #111;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.control-btn:active {
+  background: #fff;
+  transform: scale(0.95);
+}
+
+#btnBackToMenu {
+  margin-bottom: 1rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.2rem;
+  background: #f00;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+
+#btnBackToMenu:hover {
+  background: #ff3333;
+  transform: scale(1.05);
+}
+
+/* Online multiplayer setup styles */
+#onlineSetup {
+  text-align: center;
+  padding: 2rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+#onlineSetup h2 {
+  color: #0ff;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+#onlineSetup p {
+  font-size: 1.2rem;
+  margin: 1rem 0;
+}
+
+.code-display {
+  background: #333;
+  border: 2px solid #0ff;
+  color: #0ff;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 1rem;
+  margin: 1rem auto;
+  border-radius: 10px;
+  letter-spacing: 0.2rem;
+  font-family: 'Courier New', monospace;
+  user-select: all;
+  -webkit-user-select: all;
+}
+
+.info-text {
+  color: #aaa;
+  font-size: 1rem;
+}
+
+#sessionCodeInput {
+  width: 80%;
+  max-width: 300px;
+  padding: 1rem;
+  font-size: 1.5rem;
+  text-align: center;
+  background: #333;
+  color: #fff;
+  border: 2px solid #0ff;
+  border-radius: 5px;
+  margin: 1rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  font-family: 'Courier New', monospace;
+}
+
+#sessionCodeInput:focus {
+  outline: none;
+  border-color: #fff;
+}
+
+#btnConnect, #btnCancelOnline {
+  margin: 1rem;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+
+#btnConnect {
+  background: #0f0;
+  color: #111;
+}
+
+#btnConnect:hover {
+  background: #0ff;
+  transform: scale(1.05);
+}
+
+#btnCancelOnline {
+  background: #666;
+  color: #fff;
+}
+
+#btnCancelOnline:hover {
+  background: #888;
+  transform: scale(1.05);
+}
+
+#connectionStatus {
+  color: #ff0;
+  font-size: 1rem;
+  margin-top: 1rem;
+  min-height: 1.5rem;
+}
+
+#waitingMessage {
+  color: #ff0;
+  font-size: 1.2rem;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Mobile responsive styles */
+@media (max-width: 850px) {
+  #menu h1 {
+    font-size: 3rem;
+  }
+
+  #scoreboard {
+    font-size: 2rem;
+  }
+
+  canvas#pong {
+    width: 100%;
+    height: auto;
+  }
+
+  #mobileControls {
+    display: flex;
+  }
+}
+
+@media (max-width: 480px) {
+  #menu h1 {
+    font-size: 2.5rem;
+  }
+
+  #menu button {
+    font-size: 1.2rem;
+    padding: 0.8rem 1.5rem;
+  }
+
+  #scoreboard {
+    font-size: 1.5rem;
+  }
+
+  .control-btn {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+  }
+}
+
+/* Landscape orientation support */
+@media (max-height: 600px) and (orientation: landscape) {
+  #menu {
+    padding: 1rem;
+  }
+
+  #menu h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  #menu button {
+    font-size: 1rem;
+    padding: 0.6rem 1rem;
+    margin: 0.5rem auto;
+  }
+
+  #gameContainer {
+    padding: 0.5rem;
+  }
+
+  #scoreboard {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  canvas#pong {
+    max-height: 70vh;
+    width: auto !important;
+    height: auto !important;
+  }
+
+  #btnBackToMenu {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+body {
+  padding-bottom: 50px;
+}
+
+.copilot-notice {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 140, 0, 0.85);
+  color: #111;
+  text-align: center;
+  padding: 0.6rem;
+  font-size: 0.85rem;
+  font-weight: bold;
+  border-top: 2px solid #ff8c00;
+  z-index: 1000;
+}
+
+.copilot-notice p {
+  margin: 0;
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+  body {
+    padding-bottom: 35px;
+  }
+  
+  .copilot-notice {
+    font-size: 0.7rem;
+    padding: 0.4rem;
+  }
+}
