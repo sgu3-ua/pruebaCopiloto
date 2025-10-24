@@ -5,7 +5,7 @@ const ctx = canvas.getContext('2d');
 let settings = {
   rows: 5,
   cols: 8,
-  ballSpeed: 6,
+  ballSpeed: 4,
   paddleWidth: 100
 };
 
