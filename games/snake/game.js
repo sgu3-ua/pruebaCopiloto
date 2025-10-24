@@ -4,7 +4,7 @@ const ctx = canvas.getContext('2d');
 // Game settings (configurable)
 let settings = {
   gridSize: 20,
-  speed: 100,
+  speed: 150,
   walls: true
 };
 
