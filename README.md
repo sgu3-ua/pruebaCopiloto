@@ -1,39 +1,61 @@
-# Pong Game - Modo Multijugador en Línea
+# Juegos Clásicos - Colección de Juegos Retro
 
-Un juego clásico de Pong con múltiples modos de juego, incluyendo multijugador en línea.
+Una colección de juegos clásicos implementados con HTML5, CSS3 y JavaScript vanilla.
 
-## 🎮 Modos de Juego
+## 🎮 Juegos Disponibles
 
-### 1. 1 Jugador (vs IA)
-- Juega contra una IA imperfecta que puede fallar
-- La dificultad aumenta progresivamente tras cada gol
-- La velocidad de la pelota y las palas se incrementa
+### 1. PONG
+- 1 Jugador (vs IA con dificultad progresiva)
+- 2 Jugadores (Local)
+- Multijugador en Línea (P2P con WebRTC)
+- Controles: W/S y Flechas o controles táctiles
 
-### 2. 2 Jugadores (Local)
-- Modo multijugador local en el mismo dispositivo
-- Jugador izquierdo: W/S
-- Jugador derecho: Flechas arriba/abajo
+### 2. BREAKOUT (Rompebloques)
+- Configuración personalizable: filas, columnas, velocidad, tamaño de pala
+- Sistema de puntuación y vidas
+- Diferentes colores de bloques
+- Controles: Flechas o A/D, controles táctiles
 
-### 3. Multijugador en Línea
-- Crea una partida y comparte el código de sesión (6 caracteres)
-- Otro jugador puede unirse introduciendo el código
-- Juego en tiempo real usando tecnología P2P (WebRTC)
-- No requiere servidor backend
+### 3. BUSCAMINAS
+- Múltiples niveles de dificultad (Fácil, Medio, Difícil)
+- Modo personalizado con configuración manual
+- Sistema de banderas (clic derecho)
+- Temporizador y contador de minas
 
-## 🕹️ Controles
+### 4. SNAKE
+- Velocidad ajustable (Lento, Normal, Rápido, Muy Rápido)
+- Tamaño de tablero configurable
+- Modo con/sin muros
+- Controles: Flechas o WASD, controles táctiles
 
-- **Jugador Izquierdo (Pala Cyan)**: W (arriba) / S (abajo)
-- **Jugador Derecho (Pala Roja)**: ↑ (arriba) / ↓ (abajo)
-- **Controles Táctiles**: Disponibles en dispositivos móviles
+## 📁 Estructura del Proyecto
 
-## 🚀 Características
+```
+pruebaCopiloto/
+├── index.html              # Menú principal de selección de juegos
+├── shared/
+│   └── main-styles.css    # Estilos compartidos del menú principal
+└── games/
+    ├── pong/              # Juego Pong
+    ├── breakout/          # Juego Breakout
+    ├── minesweeper/       # Juego Buscaminas
+    └── snake/             # Juego Snake
+```
+
+Cada juego tiene su propia carpeta con:
+- `index.html` - Interfaz del juego
+- `game.js` - Lógica del juego
+- `style.css` - Estilos del juego
+
+## 🚀 Características Generales
 
 - ✨ Interfaz moderna con efectos de neón
-- 📱 Diseño responsive para móviles
-- 🌐 Multijugador en línea sin servidor
-- 🤖 IA realista e imperfecta
-- 📈 Dificultad progresiva en modo IA
-- 🎯 Sistema de puntuación en tiempo real
+- 📱 Diseño responsive para móviles y tablets
+- 🎮 Controles táctiles para dispositivos móviles
+- ⚙️ Configuraciones personalizables en cada juego
+- 🎨 Estilos únicos para cada juego
+- 🌐 Sin dependencias externas (excepto PeerJS para Pong online)
+- 💾 No requiere servidor backend
 
 ## 💻 Tecnologías
 
@@ -48,22 +70,18 @@ Este juego está diseñado para funcionar en GitHub Pages y no requiere backend.
 
 ### Para jugarlo:
 1. Abre el archivo `index.html` en tu navegador
-2. Selecciona un modo de juego
-3. ¡Disfruta!
-
-### Para multijugador en línea:
-1. Un jugador selecciona "Multijugador en Línea (Crear Partida)"
-2. Comparte el código de 6 caracteres con su oponente
-3. El oponente selecciona "Unirse a Partida" e introduce el código
-4. ¡A jugar!
+2. Selecciona un juego del menú principal
+3. Configura las opciones del juego (si deseas)
+4. ¡Disfruta jugando!
 
 ## 📝 Notas Técnicas
 
-- El multijugador en línea usa PeerJS con un servidor de señalización gratuito
-- El host controla la física del juego y sincroniza el estado con el invitado
-- Las conexiones son P2P (peer-to-peer) para baja latencia
-- Funciona completamente del lado del cliente
+- Todos los juegos usan HTML5 Canvas para renderizado
+- JavaScript vanilla sin frameworks
+- Arquitectura modular con separación de responsabilidades
+- Cada juego es independiente y configurable
+- El multijugador en línea de Pong usa PeerJS con WebRTC (P2P)
 
 ## 🎨 Créditos
 
-Juego Pong clásico mejorado con características modernas.
+Colección de juegos clásicos reimplementados con tecnologías web modernas.

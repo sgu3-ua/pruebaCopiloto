@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Buscaminas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="menu">
+    <h1>BUSCAMINAS</h1>
+    <div class="settings">
+      <label>Dificultad:
+        <select id="difficulty">
+          <option value="easy">Fácil (9x9, 10 minas)</option>
+          <option value="medium" selected>Medio (16x16, 40 minas)</option>
+          <option value="hard">Difícil (16x30, 99 minas)</option>
+          <option value="custom">Personalizado</option>
+        </select>
+      </label>
+      <div id="customSettings" style="display: none;">
+        <label>Filas: <input type="number" id="rows" min="5" max="30" value="16"></label>
+        <label>Columnas: <input type="number" id="cols" min="5" max="30" value="16"></label>
+        <label>Minas: <input type="number" id="mines" min="1" max="200" value="40"></label>
+      </div>
+    </div>
+    <button id="btnStart">Iniciar Juego</button>
+    <button id="btnMainMenu" onclick="location.href='../../index.html'">Volver al Menú Principal</button>
+  </div>
+  <div id="gameContainer" style="display: none;">
+    <button id="btnBackToMenu">Volver al Menú</button>
+    <div id="gameInfo">
+      <div class="info-item">
+        <span>🚩 <span id="mineCount">0</span></span>
+      </div>
+      <div class="info-item">
+        <span id="timer">000</span>
+      </div>
+      <div class="info-item">
+        <button id="btnRestart">🔄 Reiniciar</button>
+      </div>
+    </div>
+    <div id="board"></div>
+  </div>
+  <footer class="copilot-notice">
+    <p>⚠️ Esta página se utiliza para realizar pruebas con el agente GitHub Copilot</p>
+  </footer>
+  <script src="game.js"></script>
+</body>
+</html>
