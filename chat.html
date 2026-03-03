@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat – Juegos Clásicos & Más</title>
+  <link rel="stylesheet" href="shared/main-styles.css">
+  <link rel="stylesheet" href="chat.css">
+  <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+</head>
+<body>
+  <!-- Login screen -->
+  <div id="loginScreen">
+    <h1>💬 CHAT</h1>
+    <p class="chat-subtitle">Chat abierto y compartido entre todos los usuarios de la página</p>
+    <div class="login-box">
+      <label for="usernameInput">Tu nombre de usuario:</label>
+      <input type="text" id="usernameInput" maxlength="20" placeholder="Elige un nombre..." autocomplete="off">
+      <button id="btnJoin">Unirse al chat</button>
+      <p id="loginError" class="login-error" style="display:none;"></p>
+    </div>
+    <button class="back-btn" onclick="location.href='index.html'">← Volver al inicio</button>
+  </div>
+
+  <!-- Chat screen -->
+  <div id="chatScreen" style="display:none;">
+    <div id="chatHeader">
+      <button class="back-btn" onclick="leaveChat()">← Salir</button>
+      <div id="chatTitle">
+        <span>💬 Chat</span>
+        <span id="userCount" class="user-count">1 usuario</span>
+      </div>
+      <div id="connectionBadge" class="badge badge-connecting">Conectando...</div>
+    </div>
+
+    <div id="messages"></div>
+
+    <div id="inputArea">
+      <input type="text" id="msgInput" maxlength="300" placeholder="Escribe un mensaje..." autocomplete="off">
+      <button id="btnSend">Enviar</button>
+    </div>
+  </div>
+
+  <footer class="copilot-notice">
+    <p>⚠️ Esta página se utiliza para realizar pruebas con el agente GitHub Copilot</p>
+  </footer>
+
+  <script src="chat.js"></script>
+</body>
+</html>

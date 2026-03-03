@@ -1,0 +1,98 @@
+/* explanations.css – styles specific to the explanations page */
+
+#mainMenu {
+  max-width: 860px;
+  padding: 2rem 1.5rem 5rem;
+}
+
+.subtitle {
+  color: #aaa;
+  font-size: 1.1rem;
+  margin: -1.5rem 0 2rem;
+}
+
+.exp-card {
+  background: #2a2a2a;
+  border: 1px solid #444;
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.exp-card h2 {
+  color: #0ff;
+  font-size: 1.6rem;
+  margin: 0 0 0.75rem;
+  text-shadow: 0 0 8px rgba(0,255,255,0.4);
+}
+
+.exp-card p {
+  margin: 0 0 0.75rem;
+  line-height: 1.6;
+  color: #ddd;
+}
+
+.exp-card ul {
+  margin: 0;
+  padding-left: 1.4rem;
+  color: #ccc;
+  line-height: 1.7;
+}
+
+.exp-card li {
+  margin-bottom: 0.4rem;
+}
+
+.exp-card strong {
+  color: #eee;
+}
+
+.exp-card code {
+  background: #333;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: #0ff;
+  font-family: 'Courier New', monospace;
+}
+
+.exp-card a {
+  color: #a855f7;
+  text-decoration: none;
+}
+
+.exp-card a:hover {
+  text-decoration: underline;
+}
+
+.back-row {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.back-btn {
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  background: #444;
+  color: #eee;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.back-btn:hover {
+  background: #666;
+  transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+  .exp-card {
+    padding: 1.2rem 1.2rem;
+  }
+
+  .exp-card h2 {
+    font-size: 1.3rem;
+  }
+}

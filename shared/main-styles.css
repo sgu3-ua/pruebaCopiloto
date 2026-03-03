@@ -64,6 +64,39 @@ body {
   opacity: 0.8;
 }
 
+.section-title {
+  font-size: 1.5rem;
+  color: #aaa;
+  margin: 2rem 0 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+}
+
+.extras-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.extra-btn {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+  color: #fff;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 150px;
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+}
+
+.extra-btn:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(168, 85, 247, 0.5);
+  background: linear-gradient(135deg, #c084fc 0%, #a855f7 100%);
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   #mainMenu h1 {

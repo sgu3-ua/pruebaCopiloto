@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explicaciones – Juegos Clásicos & Más</title>
+  <link rel="stylesheet" href="shared/main-styles.css">
+  <link rel="stylesheet" href="explanations.css">
+</head>
+<body>
+  <div id="mainMenu">
+    <h1>📖 CÓMO SE HAN HECHO</h1>
+    <p class="subtitle">Explicaciones técnicas de cada juego y funcionalidad</p>
+
+    <div class="exp-card">
+      <h2>🏓 Pong</h2>
+      <p>
+        Pong usa la <strong>Canvas 2D API</strong> del navegador para renderizar la pista, las palas y la pelota en cada fotograma.
+        El bucle principal se ejecuta con <code>requestAnimationFrame</code>, que sincroniza los redraws con la tasa de refresco del monitor.
+      </p>
+      <ul>
+        <li><strong>Física de la pelota:</strong> la pelota se mueve sumando velocidades <code>vx</code> y <code>vy</code> en cada frame. Cuando toca los bordes superior o inferior invierte <code>vy</code>; cuando colisiona con una pala, invierte <code>vx</code> y ajusta la posición para evitar que se "cuele" dentro.</li>
+        <li><strong>IA imperfecta:</strong> la IA no sigue la pelota a la perfección. Con un 20&nbsp;% de probabilidad añade un error aleatorio a su objetivo y espera entre 3 y 7 fotogramas antes de reaccionar, haciendo el juego más entretenido.</li>
+        <li><strong>Dificultad progresiva:</strong> tras cada punto se incrementan ligeramente las velocidades de la pelota, la pala y la IA hasta alcanzar un límite máximo.</li>
+        <li><strong>Multijugador en línea:</strong> se usa <a href="https://peerjs.com" target="_blank">PeerJS</a> para establecer una conexión WebRTC P2P entre dos jugadores. El anfitrión genera un código de sesión; el invitado lo introduce para conectarse. El anfitrión es la autoridad del estado de la pelota; el invitado sincroniza su posición mediante interpolación.</li>
+        <li><strong>Controles táctiles:</strong> los botones en pantalla usan eventos <code>touchstart</code> / <code>touchend</code> para mover las palas en dispositivos móviles.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <h2>🧱 Breakout</h2>
+      <p>
+        Breakout también usa <strong>Canvas 2D</strong>. El nivel se genera dinámicamente creando una cuadrícula de bloques a partir de los parámetros elegidos por el jugador (filas, columnas, velocidad y tamaño de pala).
+      </p>
+      <ul>
+        <li><strong>Colisión pelota–bloque:</strong> se comprueba solapamiento entre el rectángulo de la pelota y cada bloque activo. Al detectar colisión se calcula por qué lado impacta (horizontal o vertical) para rebotar correctamente.</li>
+        <li><strong>Ángulo de rebote en pala:</strong> la posición relativa de impacto en la pala influye en el ángulo de salida, añadiendo variedad y habilidad al juego.</li>
+        <li><strong>Sistema de vidas y puntuación:</strong> el jugador empieza con 3 vidas; pierde una cuando la pelota cae por debajo de la pala. La puntuación aumenta con cada bloque destruido.</li>
+        <li><strong>Controles:</strong> teclado (flechas izquierda/derecha) y botones táctiles en pantalla para dispositivos móviles.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <h2>💣 Buscaminas</h2>
+      <p>
+        Buscaminas <strong>no usa Canvas</strong>: el tablero se construye con elementos <code>&lt;div&gt;</code> mediante CSS Grid, lo que facilita el diseño responsivo y el manejo de eventos de clic.
+      </p>
+      <ul>
+        <li><strong>Colocación de minas:</strong> las minas se colocan aleatoriamente tras el primer clic, garantizando que la primera celda pulsada siempre es segura.</li>
+        <li><strong>Conteo de vecinos:</strong> para cada celda se cuenta cuántas de sus 8 casillas adyacentes contienen mina, generando los números del 1 al 8.</li>
+        <li><strong>Flood fill:</strong> al descubrir una celda vacía (0 minas vecinas) se expande automáticamente hacia los vecinos mediante un algoritmo de llenado por inundación iterativo (BFS/cola), revelando zonas abiertas de golpe.</li>
+        <li><strong>Marcado de minas:</strong> el clic derecho (o mantener pulsado en móvil) coloca/quita una bandera 🚩 en la celda seleccionada.</li>
+        <li><strong>Temporizador:</strong> empieza al primer clic y se detiene al ganar o perder. Muestra los segundos con tres dígitos.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <h2>🐍 Snake</h2>
+      <p>
+        Snake usa <strong>Canvas 2D</strong> y un sistema de cuadrícula (<em>grid</em>). La serpiente se representa como un array de posiciones <code>{x, y}</code>.
+      </p>
+      <ul>
+        <li><strong>Movimiento:</strong> en cada tick del juego se añade una nueva cabeza al frente del array en la dirección actual; si no ha comido, se elimina la cola. Si ha comido una manzana, la cola permanece (la serpiente crece).</li>
+        <li><strong>Detección de colisiones:</strong> se comprueba si la cabeza choca con los bordes (con la opción de muros activada) o con algún segmento del cuerpo.</li>
+        <li><strong>Velocidad configurable:</strong> el bucle usa <code>setInterval</code> en lugar de <code>requestAnimationFrame</code>, con intervalos de 80&ndash;250&nbsp;ms según la velocidad elegida.</li>
+        <li><strong>Tablero configurable:</strong> el tamaño del canvas y la cuadrícula se adaptan dinámicamente al tamaño elegido (15×15, 20×20 o 25×25).</li>
+        <li><strong>Controles:</strong> teclas de dirección o WASD en escritorio; botones en pantalla en móvil. Se ignoran giros de 180° (no se puede ir directamente en sentido contrario).</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <h2>💬 Chat</h2>
+      <p>
+        El chat es una funcionalidad P2P (<em>peer-to-peer</em>) sin base de datos ni servidor propio, apoyándose también en <strong>PeerJS</strong>.
+      </p>
+      <ul>
+        <li><strong>Topología en estrella:</strong> el primer usuario que entra intenta registrarse con un ID de sala fijo en el servidor de señalización de PeerJS. Si lo consigue, se convierte en <em>anfitrión</em> y retransmite los mensajes a todos los demás. Los usuarios siguientes se conectan a ese anfitrión.</li>
+        <li><strong>Sin base de datos:</strong> el historial de mensajes recientes se mantiene en memoria en el anfitrión y se envía a cada nuevo usuario al conectarse. Si todos los usuarios se desconectan, el historial se pierde.</li>
+        <li><strong>Reconexión automática:</strong> si el anfitrión cierra la sesión, el siguiente cliente espera un momento e intenta convertirse en el nuevo anfitrión de la sala.</li>
+        <li><strong>Sin autenticación:</strong> el chat es abierto: basta con elegir un nombre de usuario para participar.</li>
+      </ul>
+    </div>
+
+    <div class="back-row">
+      <button class="back-btn" onclick="location.href='index.html'">← Volver al inicio</button>
+    </div>
+  </div>
+
+  <footer class="copilot-notice">
+    <p>⚠️ Esta página se utiliza para realizar pruebas con el agente GitHub Copilot</p>
+  </footer>
+</body>
+</html>
