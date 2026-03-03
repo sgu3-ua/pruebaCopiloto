@@ -13,7 +13,8 @@
 const ROOM_ID = 'chat-juegos-clasicos-sala-v1';
 const MAX_HISTORY = 80;
 const RECONNECT_DELAY_MS = 2000;
-const JOIN_TIMEOUT_MS = 4000;
+const JOIN_TIMEOUT_MS = 5000;       // time to wait for host before becoming host
+const GLOBAL_TIMEOUT_MS = 15000;    // overall connection timeout before showing retry
 const PEER_DEBUG_LEVEL = 0;
 
 let peer = null;
@@ -23,6 +24,7 @@ let clients = [];             // (host) connections to all clients
 let history = [];             // (host) in-memory message history
 let username = '';
 let userCount = 1;
+let globalConnectionTimer = null; // overall timeout handle
 
 // ── DOM references ─────────────────────────────────────────────────
 const loginScreen    = document.getElementById('loginScreen');
@@ -52,6 +54,7 @@ function startJoin() {
   loginScreen.style.display = 'none';
   chatScreen.style.display = 'flex';
   setBadge('connecting', 'Conectando...');
+  startGlobalTimeout();
   joinRoom();
 }
 
@@ -61,26 +64,73 @@ function showLoginError(msg) {
 }
 
 // ── Room joining ───────────────────────────────────────────────────
+function startGlobalTimeout() {
+  clearTimeout(globalConnectionTimer);
+  globalConnectionTimer = setTimeout(() => {
+    if (!isHost && !hostConn) {
+      setBadge('error', 'Sin conexión');
+      addSystemMessage('No se pudo conectar al servidor. Comprueba tu conexión a internet.');
+      addRetryButton();
+    }
+  }, GLOBAL_TIMEOUT_MS);
+}
+
+function addRetryButton() {
+  const btn = document.createElement('button');
+  btn.textContent = '🔄 Reintentar';
+  btn.className = 'retry-btn';
+  btn.onclick = () => {
+    btn.remove();
+    if (peer) peer.destroy();
+    peer = null;
+    isHost = false;
+    hostConn = null;
+    clients = [];
+    setBadge('connecting', 'Conectando...');
+    startGlobalTimeout();
+    joinRoom();
+  };
+  messagesEl.appendChild(btn);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
 function joinRoom() {
   peer = new Peer(null, { debug: PEER_DEBUG_LEVEL });
-  peer.on('open', () => tryAsClient());
+  peer.on('open', () => {
+    addSystemMessage('Buscando sala...');
+    tryAsClient();
+  });
   peer.on('error', (err) => {
     console.error('Peer error:', err);
-    addSystemMessage('Error de conexión. Intenta recargar la página.');
+    clearTimeout(globalConnectionTimer);
+    addSystemMessage('Error de conexión: ' + (err.type || err.message || 'desconocido'));
     setBadge('error', 'Error');
+    addRetryButton();
   });
 }
 
 function tryAsClient() {
   const conn = peer.connect(ROOM_ID, { reliable: true });
 
+  // 'settled' prevents becomeHost() being called more than once.
+  // Without this guard, calling conn.close() in the timeout can fire
+  // conn.on('error') asynchronously, causing a double becomeHost() call
+  // that destroys the peer it just created and loops forever.
+  let settled = false;
+
   const timeout = setTimeout(() => {
-    conn.close();
-    becomeHost();
+    if (!settled) {
+      settled = true;
+      addSystemMessage('Creando nueva sala...');
+      becomeHost();
+    }
   }, JOIN_TIMEOUT_MS);
 
   conn.on('open', () => {
+    if (settled) return;
+    settled = true;
     clearTimeout(timeout);
+    clearTimeout(globalConnectionTimer);
     isHost = false;
     hostConn = conn;
     setBadge('client', 'Conectado');
@@ -89,7 +139,10 @@ function tryAsClient() {
   });
 
   conn.on('error', () => {
+    if (settled) return;
+    settled = true;
     clearTimeout(timeout);
+    addSystemMessage('Error al conectar. Creando nueva sala...');
     becomeHost();
   });
 }
@@ -100,6 +153,7 @@ function becomeHost() {
   peer = new Peer(ROOM_ID, { debug: PEER_DEBUG_LEVEL });
 
   peer.on('open', () => {
+    clearTimeout(globalConnectionTimer);
     isHost = true;
     setBadge('host', 'Anfitrión');
     addSystemMessage('Eres el anfitrión de esta sala.');
@@ -115,12 +169,16 @@ function becomeHost() {
   peer.on('error', (err) => {
     // Another peer claimed the host ID first – retry as client
     if (err.type === 'unavailable-id') {
+      addSystemMessage('Sala ya existente, uniéndose...');
       peer.destroy();
       peer = new Peer(null, { debug: PEER_DEBUG_LEVEL });
       peer.on('open', () => setTimeout(tryAsClient, 500));
     } else {
       console.error('Host peer error:', err);
+      clearTimeout(globalConnectionTimer);
+      addSystemMessage('Error al conectar: ' + (err.type || err.message || 'desconocido'));
       setBadge('error', 'Error');
+      addRetryButton();
     }
   });
 }
@@ -187,6 +245,7 @@ function setupClientHandlers(conn) {
     setTimeout(() => {
       peer.destroy();
       peer = new Peer(null, { debug: PEER_DEBUG_LEVEL });
+      startGlobalTimeout();
       peer.on('open', () => setTimeout(tryAsClient, 500));
     }, RECONNECT_DELAY_MS);
   });

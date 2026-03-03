@@ -162,6 +162,24 @@
   color: #fff;
 }
 
+.retry-btn {
+  align-self: center;
+  margin: 0.5rem 0;
+  padding: 0.6rem 1.4rem;
+  font-size: 0.95rem;
+  background: linear-gradient(135deg, #a855f7, #7c3aed);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.retry-btn:hover {
+  background: linear-gradient(135deg, #c084fc, #a855f7);
+  transform: scale(1.05);
+}
+
 #messages {
   flex: 1;
   overflow-y: auto;
