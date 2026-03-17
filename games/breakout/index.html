@@ -14,6 +14,11 @@
       <label>Columnas de bloques: <input type="number" id="colCount" min="5" max="12" value="8"></label>
       <label>Velocidad de la bola: <input type="range" id="ballSpeed" min="2" max="8" value="4"></label>
       <label>Tamaño de la pala: <input type="range" id="paddleSize" min="60" max="150" value="100"></label>
+      <label class="power-label">
+        <input type="checkbox" id="powerMode">
+        ⚡ MODO PODERES
+        <span class="power-desc">Multi-bola · Ladrillos con vida · Poderes · Láser · Velocidad creciente</span>
+      </label>
     </div>
     <button id="btnStart">Iniciar Juego</button>
     <button id="btnMainMenu" onclick="location.href='../../index.html'">Volver al Menú Principal</button>
@@ -27,6 +32,7 @@
     <canvas id="breakout" width="800" height="600"></canvas>
     <div id="mobileControls">
       <button class="control-btn" id="moveLeft">◄</button>
+      <button class="control-btn fire-btn" id="fireBtn" style="display:none;">⚡</button>
       <button class="control-btn" id="moveRight">►</button>
     </div>
   </div>
