@@ -99,8 +99,9 @@ canvas#breakout {
 
 #mobileControls {
   display: none;
-  gap: 2rem;
+  gap: 1rem;
   margin-top: 1rem;
+  align-items: center;
 }
 
 .control-btn {
@@ -116,9 +117,48 @@ canvas#breakout {
   user-select: none;
 }
 
+.control-btn.fire-btn {
+  background: #ff0;
+  width: 80px;
+  height: 80px;
+}
+
 .control-btn:active {
   background: #fff;
   transform: scale(0.95);
+}
+
+/* Power mode toggle */
+.power-label {
+  cursor: pointer;
+  display: flex !important;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  background: #2a1a3a;
+  border: 1px solid #a855f7;
+  border-radius: 8px;
+  padding: 0.8rem 1rem !important;
+  margin-top: 1.5rem !important;
+  font-size: 1.3rem !important;
+  color: #c084fc;
+}
+
+.power-label input[type="checkbox"] {
+  width: 1.3em;
+  height: 1.3em;
+  accent-color: #a855f7;
+  cursor: pointer;
+  margin: 0;
+}
+
+.power-desc {
+  font-size: 0.85rem;
+  color: #888;
+  display: block;
+  width: 100%;
+  margin-top: 0.2rem;
+  margin-left: 1.8rem;
 }
 
 #btnBackToMenu {

@@ -21,7 +21,9 @@
       <div id="customSettings" style="display: none;">
         <label>Filas: <input type="number" id="rows" min="5" max="30" value="16"></label>
         <label>Columnas: <input type="number" id="cols" min="5" max="30" value="16"></label>
-        <label>Minas: <input type="number" id="mines" min="1" max="200" value="40"></label>
+        <label>Minas: <input type="number" id="mines" min="1" max="247" value="40">
+          <small id="minesHint" style="color:#aaa;"> (máx. 247)</small>
+        </label>
       </div>
     </div>
     <button id="btnStart">Iniciar Juego</button>
@@ -46,5 +48,18 @@
     <p>⚠️ Esta página se utiliza para realizar pruebas con el agente GitHub Copilot</p>
   </footer>
   <script src="game.js"></script>
+  <script>
+    // Keep mines max hint in sync with custom rows/cols inputs
+    function updateMinesHint() {
+      const r = parseInt(document.getElementById('rows').value) || 16;
+      const c = parseInt(document.getElementById('cols').value) || 16;
+      const maxM = r * c - 9;
+      document.getElementById('mines').max = maxM;
+      document.getElementById('minesHint').textContent = '(máx. ' + maxM + ')';
+    }
+    document.getElementById('rows').addEventListener('input', updateMinesHint);
+    document.getElementById('cols').addEventListener('input', updateMinesHint);
+    updateMinesHint();
+  </script>
 </body>
 </html>

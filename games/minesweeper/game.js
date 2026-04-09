@@ -44,9 +44,13 @@ document.getElementById('difficulty').addEventListener('change', (e) => {
 
 document.getElementById('btnStart').addEventListener('click', () => {
   if (document.getElementById('difficulty').value === 'custom') {
-    settings.rows = parseInt(document.getElementById('rows').value);
-    settings.cols = parseInt(document.getElementById('cols').value);
-    settings.mines = parseInt(document.getElementById('mines').value);
+    settings.rows = Math.max(5, Math.min(30, parseInt(document.getElementById('rows').value) || 16));
+    settings.cols = Math.max(5, Math.min(30, parseInt(document.getElementById('cols').value) || 16));
+    const maxMines = settings.rows * settings.cols - 9; // reserve a 3×3 safe area around the first click
+    settings.mines = Math.max(1, Math.min(maxMines, parseInt(document.getElementById('mines').value) || 40));
+    if (settings.mines !== parseInt(document.getElementById('mines').value)) {
+      document.getElementById('mines').value = settings.mines;
+    }
   }
   startGame();
 });
@@ -177,22 +181,30 @@ function handleCellRightClick(row, col) {
   renderBoard();
 }
 
-// Reveal cell
-function revealCell(row, col) {
-  if (board[row][col].revealed || board[row][col].flagged) return;
-  
-  board[row][col].revealed = true;
-  revealedCount++;
-  
-  // If empty cell, reveal neighbors
-  if (board[row][col].neighborMines === 0 && !board[row][col].mine) {
-    for (let dr = -1; dr <= 1; dr++) {
-      for (let dc = -1; dc <= 1; dc++) {
-        if (dr === 0 && dc === 0) continue;
-        const nr = row + dr;
-        const nc = col + dc;
-        if (nr >= 0 && nr < settings.rows && nc >= 0 && nc < settings.cols) {
-          revealCell(nr, nc);
+// Reveal cell – iterative BFS to avoid call-stack overflow on large empty areas
+function revealCell(startRow, startCol) {
+  if (board[startRow][startCol].revealed || board[startRow][startCol].flagged) return;
+
+  const queue = [[startRow, startCol]];
+  while (queue.length > 0) {
+    const [row, col] = queue.shift();
+    if (board[row][col].revealed || board[row][col].flagged) continue;
+
+    board[row][col].revealed = true;
+    revealedCount++;
+
+    // Only propagate flood-fill for truly empty (0-neighbour) non-mine cells
+    if (board[row][col].neighborMines === 0 && !board[row][col].mine) {
+      for (let dr = -1; dr <= 1; dr++) {
+        for (let dc = -1; dc <= 1; dc++) {
+          if (dr === 0 && dc === 0) continue;
+          const nr = row + dr;
+          const nc = col + dc;
+          if (nr >= 0 && nr < settings.rows && nc >= 0 && nc < settings.cols) {
+            if (!board[nr][nc].revealed && !board[nr][nc].flagged) {
+              queue.push([nr, nc]);
+            }
+          }
         }
       }
     }

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Space Invaders</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Menu screen -->
+  <div id="menu">
+    <div class="stars-bg"></div>
+    <h1>SPACE<br>INVADERS</h1>
+    <p class="subtitle">¡Defiende la Tierra de la invasión alienígena!</p>
+    <div class="feature-list">
+      <span>🛸 UFO Jefe con poderes</span>
+      <span>🔥 Disparo rápido</span>
+      <span>💥 Mega bomba</span>
+      <span>🛡 Escudos destructibles</span>
+    </div>
+    <div class="menu-controls">
+      <p class="control-hint">← → / A D = Mover &nbsp;|&nbsp; Espacio = Disparar</p>
+    </div>
+    <button id="btnStart">INICIAR</button>
+    <button onclick="location.href='../../index.html'">Menú Principal</button>
+  </div>
+
+  <!-- Game screen -->
+  <div id="gameContainer" style="display:none;">
+    <div id="gameHUD">
+      <div class="hud-item">PUNTOS: <span id="scoreDisp">0</span></div>
+      <div class="hud-item">NIVEL: <span id="levelDisp">1</span></div>
+      <div class="hud-item">VIDAS: <span id="livesDisp">♥ ♥ ♥</span></div>
+      <div class="hud-item">REC: <span id="hiScoreDisp">0</span></div>
+    </div>
+    <canvas id="siCanvas" width="800" height="560"></canvas>
+    <div id="mobileControls">
+      <button class="ctrl-btn" id="btnLeft">◄</button>
+      <button class="ctrl-btn fire-ctrl" id="btnFire">●</button>
+      <button class="ctrl-btn" id="btnRight">►</button>
+    </div>
+  </div>
+
+  <footer class="copilot-notice">
+    <p>⚠️ Esta página se utiliza para realizar pruebas con el agente GitHub Copilot</p>
+  </footer>
+  <script src="game.js"></script>
+</body>
+</html>
