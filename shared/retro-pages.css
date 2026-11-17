@@ -26,7 +26,8 @@ body.retro-page {
   font-family: "Courier New", Courier, monospace;
 }
 
-body.retro-page h1 {
+body.retro-page #menu h1,
+body.retro-page #loginScreen h1 {
   color: var(--arcade-yellow);
   letter-spacing: 0.08em;
   text-shadow: 3px 3px 0 var(--arcade-pink), 0 0 20px rgba(255, 230, 109, 0.45);
@@ -70,6 +71,32 @@ body.retro-page button:hover {
   background: #214377;
   transform: translate(-2px, -2px);
   box-shadow: 7px 7px 0 var(--arcade-shadow), 0 0 16px rgba(85, 247, 229, 0.35);
+}
+
+body.retro-page #btnBackToMenu,
+body.retro-page #onlineSetup button,
+body.retro-page #btnRestart,
+body.retro-page #btnJoin,
+body.retro-page #btnSend,
+body.retro-page .control-btn,
+body.retro-page .ctrl-btn {
+  border: 3px solid var(--arcade-orange);
+  border-radius: 0;
+  background: #3a1f61;
+  color: var(--arcade-text);
+  font-family: inherit;
+  box-shadow: 5px 5px 0 var(--arcade-shadow);
+}
+
+body.retro-page #btnBackToMenu:hover,
+body.retro-page #onlineSetup button:hover,
+body.retro-page #btnRestart:hover,
+body.retro-page #btnJoin:hover,
+body.retro-page #btnSend:hover,
+body.retro-page .control-btn:hover,
+body.retro-page .ctrl-btn:hover {
+  background: #542b80;
+  box-shadow: 7px 7px 0 var(--arcade-shadow), 0 0 16px rgba(255, 159, 67, 0.35);
 }
 
 body.retro-page button:focus-visible,
