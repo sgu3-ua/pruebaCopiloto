@@ -8,9 +8,13 @@
 </head>
 <body>
   <div id="mainMenu">
-    <h1>JUEGOS CLÁSICOS & MÁS</h1>
+    <header class="arcade-header">
+      <p class="eyebrow">★ SALÓN ARCADE ★</p>
+      <h1>JUEGOS CLÁSICOS <span>&amp; MÁS</span></h1>
+      <p class="insert-coin">INSERT COIN TO PLAY</p>
+    </header>
 
-    <h2 class="section-title">🎮 Juegos</h2>
+    <h2 class="section-title"><span>01</span> JUEGOS</h2>
     <div class="game-grid">
       <button class="game-btn" onclick="location.href='games/pong/index.html'">
         <span class="game-title">PONG</span>
@@ -34,7 +38,7 @@
       </button>
     </div>
 
-    <h2 class="section-title">✨ Más funcionalidades</h2>
+    <h2 class="section-title"><span>02</span> MÁS FUNCIONES</h2>
     <div class="game-grid extras-grid">
       <button class="extra-btn" onclick="location.href='explanations.html'">
         <span class="game-title">📖 EXPLICACIONES</span>
@@ -46,8 +50,15 @@
       </button>
     </div>
   </div>
-  <footer class="copilot-notice">
-    <p>⚠️ Esta página se utiliza para realizar pruebas con el agente GitHub Copilot</p>
-  </footer>
+  <div class="notice-backdrop" id="noticeModal" role="dialog" aria-modal="true"
+    aria-labelledby="noticeTitle">
+    <button class="notice-card" id="noticeDismiss" type="button" aria-label="Cerrar aviso">
+      <span class="notice-icon" aria-hidden="true">!</span>
+      <span class="notice-kicker">AVISO DEL SISTEMA</span>
+      <strong id="noticeTitle">Esta página se utiliza para realizar pruebas con el agente GitHub Copilot</strong>
+      <span class="notice-hint">PULSA PARA CONTINUAR</span>
+    </button>
+  </div>
+  <script src="shared/main-menu.js"></script>
 </body>
 </html>
