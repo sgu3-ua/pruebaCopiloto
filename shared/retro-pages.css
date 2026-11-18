@@ -1,0 +1,229 @@
+/* Shared arcade skin for every page except the main menu. */
+
+:root {
+  --arcade-bg: #080c23;
+  --arcade-panel: #111a3b;
+  --arcade-panel-light: #182b56;
+  --arcade-text: #f7f0d0;
+  --arcade-muted: #b7c8e8;
+  --arcade-pink: #ff3cac;
+  --arcade-cyan: #55f7e5;
+  --arcade-yellow: #ffe66d;
+  --arcade-orange: #ff9f43;
+  --arcade-shadow: #050817;
+}
+
+body.retro-page {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 1.5rem 1rem 4.5rem;
+  background:
+    linear-gradient(rgba(8, 12, 35, 0.9), rgba(8, 12, 35, 0.9)),
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(255, 255, 255, 0.025) 4px);
+  color: var(--arcade-text);
+  font-family: "Courier New", Courier, monospace;
+}
+
+body.retro-page #menu h1,
+body.retro-page #loginScreen h1 {
+  color: var(--arcade-yellow);
+  letter-spacing: 0.08em;
+  text-shadow: 3px 3px 0 var(--arcade-pink), 0 0 20px rgba(255, 230, 109, 0.45);
+}
+
+body.retro-page #menu,
+body.retro-page #loginScreen,
+body.retro-page #chatScreen,
+body.retro-page #gameContainer {
+  position: relative;
+  z-index: 1;
+}
+
+body.retro-page #menu {
+  width: min(100%, 680px);
+  padding: 1.5rem;
+  background: rgba(17, 26, 59, 0.72);
+  border: 3px solid var(--arcade-pink);
+  box-shadow: 8px 8px 0 var(--arcade-shadow);
+}
+
+body.retro-page #menu h1 {
+  margin-top: 0;
+}
+
+body.retro-page #menu button,
+body.retro-page button {
+  box-sizing: border-box;
+  border: 3px solid var(--arcade-cyan);
+  border-radius: 0;
+  background: var(--arcade-panel-light);
+  color: var(--arcade-text);
+  font-family: inherit;
+  font-weight: bold;
+  box-shadow: 5px 5px 0 var(--arcade-shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+body.retro-page #menu button:hover,
+body.retro-page button:hover {
+  background: #214377;
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--arcade-shadow), 0 0 16px rgba(85, 247, 229, 0.35);
+}
+
+body.retro-page #btnBackToMenu,
+body.retro-page #onlineSetup button,
+body.retro-page #btnRestart,
+body.retro-page #btnJoin,
+body.retro-page #btnSend,
+body.retro-page .control-btn,
+body.retro-page .ctrl-btn {
+  border: 3px solid var(--arcade-orange);
+  border-radius: 0;
+  background: #3a1f61;
+  color: var(--arcade-text);
+  font-family: inherit;
+  box-shadow: 5px 5px 0 var(--arcade-shadow);
+}
+
+body.retro-page #btnBackToMenu:hover,
+body.retro-page #onlineSetup button:hover,
+body.retro-page #btnRestart:hover,
+body.retro-page #btnJoin:hover,
+body.retro-page #btnSend:hover,
+body.retro-page .control-btn:hover,
+body.retro-page .ctrl-btn:hover {
+  background: #542b80;
+  box-shadow: 7px 7px 0 var(--arcade-shadow), 0 0 16px rgba(255, 159, 67, 0.35);
+}
+
+body.retro-page button:focus-visible,
+body.retro-page input:focus-visible,
+body.retro-page select:focus-visible {
+  outline: 3px solid var(--arcade-yellow);
+  outline-offset: 3px;
+}
+
+body.retro-page .settings,
+body.retro-page .login-box,
+body.retro-page #chatHeader,
+body.retro-page #inputArea,
+body.retro-page .exp-card {
+  background: rgba(17, 26, 59, 0.9);
+  border: 3px solid #2e4a7b;
+  border-radius: 0;
+  box-shadow: 6px 6px 0 var(--arcade-shadow);
+}
+
+body.retro-page .settings label,
+body.retro-page .login-box label {
+  color: var(--arcade-muted);
+}
+
+body.retro-page input,
+body.retro-page select {
+  border: 2px solid var(--arcade-cyan);
+  border-radius: 0;
+  background: #080f2b;
+  color: var(--arcade-text);
+  font-family: inherit;
+}
+
+body.retro-page canvas {
+  border: 4px solid var(--arcade-cyan);
+  box-shadow: 6px 6px 0 var(--arcade-shadow), 0 0 20px rgba(85, 247, 229, 0.25);
+}
+
+body.retro-page #scoreboard,
+body.retro-page #gameInfo,
+body.retro-page #gameHUD {
+  color: var(--arcade-yellow);
+  text-shadow: 0 0 8px rgba(255, 230, 109, 0.35);
+}
+
+body.retro-page .info-item,
+body.retro-page .code-display,
+body.retro-page #customSettings {
+  background: var(--arcade-panel);
+  border: 2px solid var(--arcade-cyan);
+  border-radius: 0;
+}
+
+body.retro-page .exp-card {
+  text-align: left;
+  border-color: #2e4a7b;
+}
+
+body.retro-page .exp-card h2,
+body.retro-page .chat-subtitle,
+body.retro-page .subtitle {
+  color: var(--arcade-cyan);
+}
+
+body.retro-page .exp-card p,
+body.retro-page .exp-card ul {
+  color: var(--arcade-muted);
+}
+
+body.retro-page .exp-card code {
+  background: #080f2b;
+  border-radius: 0;
+  color: var(--arcade-yellow);
+}
+
+body.retro-page .exp-card a {
+  color: var(--arcade-pink);
+}
+
+body.retro-page .back-btn {
+  border-color: var(--arcade-orange);
+  background: #3a1f61;
+}
+
+body.retro-page .msg {
+  border-radius: 0;
+  border: 2px solid #2e4a7b;
+}
+
+body.retro-page .msg-own {
+  background: #3a1f61;
+  border-color: var(--arcade-pink);
+}
+
+body.retro-page .msg-other {
+  background: var(--arcade-panel-light);
+}
+
+body.retro-page .msg-username {
+  color: var(--arcade-cyan);
+}
+
+body.retro-page .badge {
+  border-radius: 0;
+  border: 1px solid var(--arcade-cyan);
+  background: var(--arcade-panel-light);
+  color: var(--arcade-cyan);
+}
+
+body.retro-page .copilot-notice {
+  background: var(--arcade-orange);
+  color: #201022;
+  border-top: 3px solid var(--arcade-yellow);
+  font-family: inherit;
+}
+
+body.retro-page .copilot-notice p {
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  body.retro-page {
+    padding: 1rem 0.75rem 4rem;
+  }
+
+  body.retro-page #menu {
+    padding: 1rem;
+  }
+}
